@@ -1,3 +1,20 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu slot="star" menuId="menu1" contentId="main">
+    <ion-header>
+      <ion-toolbar color="secundario">
+        <ion-title >Favoritos</ion-title>
+      </ion-toolbar>
+    </ion-header >
+    <ion-content color="secundario">
+      <ion-list>
+        <ion-item color="secundario">
+          <ion-label>EJEMPLO</ion-label>
+        </ion-item>
+        <ion-item color="secundario">
+          <ion-label>EJEMPLO2</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>
