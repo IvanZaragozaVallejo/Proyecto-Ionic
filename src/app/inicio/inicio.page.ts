@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { ThemeService } from '../theme.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { ThemeService } from '../theme.service';
 export class InicioPage implements OnInit {
 
   constructor(
+    private navController: NavController,
     private router: Router,
     private menuController: MenuController,
     private themeService: ThemeService
@@ -20,7 +21,7 @@ export class InicioPage implements OnInit {
   }
 
   Configuracion(){
-    this.router.navigate(['/configuracion']);
+    this.navController.navigateForward(['/configuracion']);
   }
 
   botonFavoritos(){
