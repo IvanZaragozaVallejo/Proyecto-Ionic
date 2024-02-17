@@ -90,6 +90,15 @@
 	--ion-color-secundario-contrast-rgb: 255,255,255;
 	--ion-color-secundario-shade: #5a00e0;
 	--ion-color-secundario-tint: #751aff;
+
+  // Colores para el modo nocturno
+  --ion-color-new: #000;
+	--ion-color-new-rgb: 0,0,0;
+	--ion-color-new-contrast: #ffffff;
+	--ion-color-new-contrast-rgb: 255,255,255;
+	--ion-color-new-shade: #000000;
+	--ion-color-new-tint: #1a1a1a;--ion-background-color-dark: #121212;
+  --ion-text-color-dark: #ffffff;
   
 }
 

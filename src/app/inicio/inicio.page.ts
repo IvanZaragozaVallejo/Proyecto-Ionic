@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { ThemeService } from '../theme.service';
 
 @Component({
   selector: 'app-inicio',
@@ -11,7 +12,8 @@ export class InicioPage implements OnInit {
 
   constructor(
     private router: Router,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private themeService: ThemeService
   ) { }
 
   ngOnInit() {
@@ -23,6 +25,10 @@ export class InicioPage implements OnInit {
 
   botonFavoritos(){
     this.menuController.toggle();
+  }
+
+  toggleDarkMode() {
+    this.themeService.toggleDarkMode();
   }
 
 }
