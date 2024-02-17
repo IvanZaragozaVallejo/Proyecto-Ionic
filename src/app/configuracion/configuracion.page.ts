@@ -7,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfiguracionPage implements OnInit {
 
-  constructor() { }
+  seleccionUnidadTemperatura: string;
+  seleccionLenguage: string;
+  constructor() { 
+    this.seleccionUnidadTemperatura = 'celsius'; //Por defecto
+    this.seleccionLenguage = 'spanish';  //Por defecto  
+  }
 
   ngOnInit() {
   }

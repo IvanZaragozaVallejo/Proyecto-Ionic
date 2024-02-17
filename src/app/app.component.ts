@@ -7,31 +7,18 @@ import { ThemeService } from './theme.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private themeService: ThemeService) {}
+
+    constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
-    // Inicialmente, verifica el estado actual del modo oscuro y aplica la clase correspondiente al body
-    this.updateDarkModeClass(this.themeService.isDarkMode());
-
-    // Escucha los cambios en el modo oscuro y actualiza la clase del body en consecuencia
-    this.themeService.themeChanged.subscribe((darkMode: boolean) => {
-      this.updateDarkModeClass(darkMode);
+    this.themeService.themeChanged.subscribe(darkMode => {
+      if (darkMode) {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+      } else {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+      }
     });
   }
-
-  private updateDarkModeClass(darkMode: boolean) {
-    const ionContentElements = document.querySelectorAll('ion-content');
-    if (darkMode) {
-      document.body.classList.add('dark-theme');
-      ionContentElements.forEach(element => {
-        element.classList.add('dark-theme');
-      });
-    } else {
-      document.body.classList.remove('dark-theme');
-      ionContentElements.forEach(element => {
-        element.classList.remove('dark-theme');
-      });
-    }
-  }
-  
 }
