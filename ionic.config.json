@@ -1,0 +1,7 @@
+{
+  "name": "ProyectoLDM",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

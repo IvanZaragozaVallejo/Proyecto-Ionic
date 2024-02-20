@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="principal">
+      <ion-buttons slot="start">
+        <ion-button (click)="botonFavoritos()">
+          <ion-icon id="favoritos" slot="icon-only" name="star-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Inicio</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="Configuracion()" >
+          <ion-icon slot="icon-only" name="settings"></ion-icon>
+        </ion-button>
+        <!-- Botón e icono para el modo nocturno -->
+        <ion-button (click)="toggleDarkMode()">
+          <ion-icon slot="icon-only" name="moon"></ion-icon>
+        </ion-button>
+      </ion-buttons>  
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="principal">
+<h3>hola</h3>
+</ion-content>

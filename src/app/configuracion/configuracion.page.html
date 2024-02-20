@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="principal">
+    <ion-buttons slot="start">
+      <ion-back-button text="Volver" defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Configuracion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="principal">
+  <ion-list>
+    <ion-item color = "principal">
+      <ion-label>Temperatura</ion-label>
+      <ion-select [(ngModel)]="seleccionTemperatura">
+        <ion-select-option value="celsius">Celsius</ion-select-option>
+        <ion-select-option value="fahrenheit">Fahrenheit</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item color="principal">
+      <ion-label>Viento</ion-label>
+      <ion-select [(ngModel)]="seleccionViento">
+        <ion-select-option value="kmh">Kilómetros por hora (km/h)</ion-select-option>
+        <ion-select-option value="mih">Millas por hora (mi/h)</ion-select-option>
+        <ion-select-option value="ms">Metros por segundo (m/s)</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item color="principal">
+      <ion-label>Precipitacion</ion-label>
+      <ion-select [(ngModel)]="seleccionPrecipitacion">
+        <ion-select-option value="mm">Milímetros (mm)</ion-select-option>
+        <ion-select-option value="in">Pulgadas (in)</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>
