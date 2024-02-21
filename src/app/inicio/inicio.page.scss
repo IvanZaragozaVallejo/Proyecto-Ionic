@@ -1,3 +1,45 @@
 #favoritos {
     color:  #FFFF33;
 }
+
+.imagenPrincipal {
+    border: 10px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 100%;
+    max-height: 100%;
+    transform: scale(0.5);
+}
+
+.contenidoImagen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.parrafos {
+    margin-top: 200px;
+    border: 5px solid red;
+}
+
+.info .parrafos {
+    display: flex;
+    justify-content: space-around;
+}
+
+.info h2 {
+    margin-bottom: 10px;
+}
+
+#guardar {
+    color: #FFFF33;
+    font-size: 40px;
+    margin-left: 250px;
+}
+

@@ -18,6 +18,23 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="principal">
-<h3>hola</h3>
+<ion-content class="contenidoImagen" color="principal">
+  <div class="imagenPrincipal">
+    <img src="assets/img/dark_clear-day.png" alt="Imagen">
+  </div>
+  <div class="contenedorBotonGuardar">
+    <ion-buttons slot="end">
+      <ion-button> <!--Falta hacerle el (click)='guardar()'-->
+        <ion-icon id="guardar" slot="icon-only" name="bookmark-outline"></ion-icon> 
+      </ion-button>
+    </ion-buttons>
+  </div>
+    <div class="info">
+      <h2>Nublado</h2>
+        <div class="parrafos">
+        <p>Humedad</p>
+        <p>Precipitaciones</p>
+        <p>Viento</p>
+      </div>
+    </div>
 </ion-content>
