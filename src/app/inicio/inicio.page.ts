@@ -41,6 +41,13 @@ export class InicioPage implements OnInit {
   ngOnInit() {
     this.printCurrentPosition(null);
   }
+  
+
+  handleSearchInput(event: any) {
+    const query = event.target.value.toLowerCase();
+    console.log(query);
+    this.printCurrentPosition(query);
+  }
 
   async printCurrentPosition(query: string | null) {
     if (query !== null) {
