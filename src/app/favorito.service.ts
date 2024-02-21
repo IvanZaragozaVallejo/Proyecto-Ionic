@@ -3,39 +3,38 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class FavoritoService {
-  private favoritos: string[] = [];
+export class FavoriteService {
+  private favorites: Set<string> = new Set();
 
   constructor() {}
 
-  agregarFavorito(ciudad: string) {
-    if (!this.favoritos.includes(ciudad)) {
-      this.favoritos.push(ciudad);
-    }
-    this.guardarFavoritos();
-  }
-
-  obtenerFavoritos(): string[] {
-    this.cargarFavoritos();
-    return this.favoritos;
-  }
-
-  eliminarFavorito(ciudad: string) {
-    const index = this.favoritos.indexOf(ciudad);
-    if (index !== -1) {
-      this.favoritos.splice(index, 1);
-      this.guardarFavoritos();
+  addFavorite(city: string): void {
+    if (!this.favorites.has(city)) {
+      this.favorites.add(city);
+      this.saveFavorites();
     }
   }
 
-  private cargarFavoritos() {
-    const storedFavoritos = localStorage.getItem('favoritos');
-    if (storedFavoritos) {
-      this.favoritos = JSON.parse(storedFavoritos);
+  getFavorites(): string[] {
+    this.loadFavorites();
+    return Array.from(this.favorites);
+  }
+
+  removeFavorite(city: string): void {
+    if (this.favorites.has(city)) {
+      this.favorites.delete(city);
+      this.saveFavorites();
     }
   }
 
-  private guardarFavoritos() {
-    localStorage.setItem('favoritos', JSON.stringify(this.favoritos));
+  private loadFavorites(): void {
+    const storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+      this.favorites = new Set(JSON.parse(storedFavorites));
+    }
+  }
+
+  private saveFavorites(): void {
+    localStorage.setItem('favorites', JSON.stringify(Array.from(this.favorites)));
   }
 }

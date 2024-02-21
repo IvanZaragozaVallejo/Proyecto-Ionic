@@ -7,11 +7,8 @@
     </ion-header >
     <ion-content color="principal">
       <ion-list>
-        <ion-item color="principal">
-          <ion-label>EJEMPLO</ion-label>
-        </ion-item>
-        <ion-item color="principal">
-          <ion-label>EJEMPLO2</ion-label>
+        <ion-item *ngFor="let favorito of favoritos">
+          <ion-label>{{ favorito }}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
