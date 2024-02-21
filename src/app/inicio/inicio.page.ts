@@ -119,4 +119,19 @@ export class InicioPage implements OnInit {
     this.themeService.toggleDarkMode();
   }
 
+  onSearch(event:CustomEvent) {
+    const searchTerm = event.detail.value;
+    console.log('Búsqueda:', searchTerm);
+  }
+
+  guardarCiudad(){
+    const ciudadGuardada = {
+      city: this.city
+    };
+      const jsonData = JSON.stringify(ciudadGuardada);
+
+      localStorage.setItem('weatherData', jsonData);
+
+      console.log('informacion guardada'); //Faltaria mover la info guardada a la pagina de favoritos
+  }
 }
