@@ -6,6 +6,7 @@ import { WeatherService } from '../services/weather.service';
 import { CitiesService } from '../services/cities.service';
 import { TranslateService } from '../services/translate.service';
 import { Geolocation } from '@capacitor/geolocation';
+import { PreferencesService } from '../preferences.service';
 
 @Component({
   selector: 'app-inicio',
@@ -35,7 +36,8 @@ export class InicioPage implements OnInit {
     private themeService: ThemeService,
     private weatherService: WeatherService,
     private citiesService: CitiesService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private preferenceService: PreferencesService
   ) { }
 
   ngOnInit() {
@@ -134,4 +136,16 @@ export class InicioPage implements OnInit {
 
       console.log('informacion guardada'); //Faltaria mover la info guardada a la pagina de favoritos
   }
+
+  ionViewWillEnter() {
+    this.preferenceService.loadPreferences();
+    this.applyPreferences();
+  }
+
+  applyPreferences() {
+    this.tempUnits = this.preferenceService.preferences.unidadTemperatura;
+    this.windUnits = this.preferenceService.preferences.viento;
+    this.precipUnits = this.preferenceService.preferences.precipitacion;
+  }
+
 }
