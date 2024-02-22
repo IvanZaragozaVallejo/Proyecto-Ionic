@@ -7,13 +7,11 @@ import { CitiesService } from '../services/cities.service';
 import { TranslateService } from '../services/translate.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { PreferencesService } from '../preferences.service';
-import { FavoritoService } from '../favorito.service';
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.page.html',
   styleUrls: ['./inicio.page.scss'],
-  providers: [FavoritoService]
 })
 export class InicioPage implements OnInit {
 
@@ -39,8 +37,7 @@ export class InicioPage implements OnInit {
     private weatherService: WeatherService,
     private citiesService: CitiesService,
     private translateService: TranslateService,
-    private preferenceService: PreferencesService,
-    private favoritoService: FavoritoService
+    private preferenceService: PreferencesService
   ) { }
 
   ngOnInit() {
@@ -129,20 +126,16 @@ export class InicioPage implements OnInit {
     console.log('Búsqueda:', searchTerm);
   }
 
-  guardarCiudad() {
-    const ciudadActual = this.city;
-  
+  guardarCiudad(){
     const ciudadGuardada = {
-      city: ciudadActual
+      city: this.city
     };
-    const jsonData = JSON.stringify(ciudadGuardada);
-    localStorage.setItem('weatherData', jsonData);
-  
-    this.favoritoService.agregarFavorito(ciudadActual);
-  
-    console.log('Información guardada y agregada a favoritos');
+      const jsonData = JSON.stringify(ciudadGuardada);
+
+      localStorage.setItem('weatherData', jsonData);
+
+      console.log('informacion guardada'); //Faltaria mover la info guardada a la pagina de favoritos
   }
-  
 
   ionViewWillEnter() {
     this.preferenceService.loadPreferences();
