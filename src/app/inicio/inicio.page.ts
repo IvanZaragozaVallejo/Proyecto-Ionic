@@ -7,6 +7,11 @@ import { CitiesService } from '../services/cities.service';
 import { TranslateService } from '../services/translate.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { PreferencesService } from '../preferences.service';
+import { Storage } from '@ionic/storage-angular';
+
+interface CiudadFavorita {
+  nombre: string;
+}
 
 @Component({
   selector: 'app-inicio',
@@ -28,7 +33,7 @@ export class InicioPage implements OnInit {
   tempUnits: string = 'farenheit';
   windUnits: string = 'mps';
   precipUnits: string = 'in';
-  ciudadesFavoritas: string[] = [];
+  ciudadesFavoritas: CiudadFavorita[] = [];
 
   constructor(
     private navController: NavController,
@@ -39,13 +44,13 @@ export class InicioPage implements OnInit {
     private citiesService: CitiesService,
     private translateService: TranslateService,
     private preferenceService: PreferencesService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private storage: Storage
   ) { }
 
   ngOnInit() {
     this.printCurrentPosition(null);
   }
-  
 
   handleSearchInput(event: any) {
     const query = event.target.value.toLowerCase();
@@ -62,19 +67,15 @@ export class InicioPage implements OnInit {
       this.latitude = coordinates.coords.latitude;
       this.longitude = coordinates.coords.longitude;
 
-      var location = this.latitude + ',' + this.longitude
+      var location = this.latitude + ',' + this.longitude;
 
-      // Esta api no es muy fiable así que se usa solo para mostrar el nombre
-      // pero el tiempo se obtiene por coordenadas para mayor fiabilidad
       this.citiesService.getCity(this.latitude, this.longitude).subscribe((response) => {
         this.city = response.address.city;
       });
-      
     }
 
     this.weatherService.getWeather(location).subscribe((response) => {
-      let weather = response
-      //console.log(weather);
+      let weather = response;
 
       this.condition = weather.currentConditions.conditions;
       this.icon = weather.currentConditions.icon;
@@ -108,6 +109,8 @@ export class InicioPage implements OnInit {
       this.translateService.getTranslation(this.condition).subscribe((response) => {
         this.condition = response.responseData.translatedText;
       });
+
+      this.guardarCiudad();
     });
   }
 
@@ -123,15 +126,15 @@ export class InicioPage implements OnInit {
     this.themeService.toggleDarkMode();
   }
 
-  onSearch(event:CustomEvent) {
+  onSearch(event: CustomEvent) {
     const searchTerm = event.detail.value;
     console.log('Búsqueda:', searchTerm);
   }
 
   guardarCiudad() {
-    if (!this.ciudadesFavoritas.includes(this.city)) {
-      this.ciudadesFavoritas.push(this.city);
-    }
+    const nuevaCiudad: CiudadFavorita = { nombre: this.city };
+    this.ciudadesFavoritas.push(nuevaCiudad);
+    this.storage.set('ciudadesFavoritas', this.ciudadesFavoritas);
   }
 
   ionViewWillEnter() {

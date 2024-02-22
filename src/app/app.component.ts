@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   }
 
   guardarCiudad() {
-    if (!this.ciudadesFavoritas.some(ciudad => ciudad.nombre === this.city)) {
+    if (this.city && !this.ciudadesFavoritas.some(ciudad => ciudad.nombre === this.city)) {
       const nuevaCiudad: CiudadFavorita = { nombre: this.city };
       this.ciudadesFavoritas.push(nuevaCiudad);
 
