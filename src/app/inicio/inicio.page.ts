@@ -28,6 +28,7 @@ export class InicioPage implements OnInit {
   tempUnits: string = 'farenheit';
   windUnits: string = 'mps';
   precipUnits: string = 'in';
+  ciudadesFavoritas: string[] = [];
 
   constructor(
     private navController: NavController,
@@ -37,7 +38,8 @@ export class InicioPage implements OnInit {
     private weatherService: WeatherService,
     private citiesService: CitiesService,
     private translateService: TranslateService,
-    private preferenceService: PreferencesService
+    private preferenceService: PreferencesService,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -126,15 +128,10 @@ export class InicioPage implements OnInit {
     console.log('Búsqueda:', searchTerm);
   }
 
-  guardarCiudad(){
-    const ciudadGuardada = {
-      city: this.city
-    };
-      const jsonData = JSON.stringify(ciudadGuardada);
-
-      localStorage.setItem('weatherData', jsonData);
-
-      console.log('informacion guardada'); //Faltaria mover la info guardada a la pagina de favoritos
+  guardarCiudad() {
+    if (!this.ciudadesFavoritas.includes(this.city)) {
+      this.ciudadesFavoritas.push(this.city);
+    }
   }
 
   ionViewWillEnter() {
