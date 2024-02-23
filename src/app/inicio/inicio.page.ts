@@ -30,7 +30,7 @@ export class InicioPage implements OnInit {
   windspeed: string = '';
   precipitations: string = '';
 
-  tempUnits: string = 'farenheit';
+  tempUnits: string = 'celsius';
   windUnits: string = 'mps';
   precipUnits: string = 'in';
   ciudadesFavoritas: CiudadFavorita[] = [];
@@ -79,11 +79,11 @@ export class InicioPage implements OnInit {
 
       this.condition = weather.currentConditions.conditions;
       this.icon = weather.currentConditions.icon;
-
+      
       if (this.tempUnits == 'celsius') {
-        this.temperature = weather.currentConditions.temp + '°C';
+        this.temperature = Math.round(((weather.currentConditions.temp - 32) * 5 / 9) * 100) / 100 + '°C';
       } else {
-        this.temperature = Math.round((weather.currentConditions.temp * 9 / 5 + 32) * 100) / 100 + '°F';
+        this.temperature = weather.currentConditions.temp + '°F';
       }
 
       this.humidity = weather.currentConditions.humidity;
