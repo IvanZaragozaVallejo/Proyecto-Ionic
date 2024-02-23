@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { PreferencesService } from '../preferences.service';
 
 @Component({
@@ -11,7 +13,10 @@ export class ConfiguracionPage implements OnInit {
   seleccionViento: string = 'kmh';
   seleccionPrecipitacion: string = 'mm';
 
-  constructor(private preferencesService: PreferencesService) {}
+  constructor(
+    private preferencesService: PreferencesService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadPreferences();
@@ -25,6 +30,9 @@ export class ConfiguracionPage implements OnInit {
     };
 
     this.preferencesService.savePreferences(preferences);
+
+    // Después de guardar las preferencias, navega de vuelta a la página de inicio
+    this.router.navigate(['/inicio']);
   }
 
   loadPreferences() {
