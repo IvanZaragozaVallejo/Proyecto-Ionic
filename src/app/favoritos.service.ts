@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { EventService } from './event.service';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FavoritosService {
+  private ciudadesFavoritasSubject = new Subject<void>();
 
-  constructor(private eventService: EventService) { 
-    this.eventService.ciudadGuardada$.subscribe(() => {
-      // Lógica para actualizar la vista en la pestaña de favoritos
-      this.cargarCiudadesFavoritas();
-    });
+  ciudadesFavoritas$(): Observable<void> {
+    return this.ciudadesFavoritasSubject.asObservable();
   }
-  cargarCiudadesFavoritas() {
-    // Lógica para cargar la lista de ciudades favoritas
+
+  actualizarCiudadesFavoritas() {
+    this.ciudadesFavoritasSubject.next();
   }
 }

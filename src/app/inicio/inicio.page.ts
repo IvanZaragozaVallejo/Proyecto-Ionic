@@ -9,6 +9,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { PreferencesService } from '../preferences.service';
 import { Storage } from '@ionic/storage-angular';
 import { EventService } from '../event.service';
+import { FavoritosService } from '../favoritos.service';
 
 interface CiudadFavorita {
   nombre: string;
@@ -49,7 +50,8 @@ export class InicioPage implements OnInit {
     private storage: Storage,
     private changeDetectorRef: ChangeDetectorRef,
     private ngZone: NgZone,
-    private eventService: EventService
+    private eventService: EventService,
+    private favoritosService: FavoritosService
 
     
   ) { this.storage.create();
@@ -151,7 +153,7 @@ export class InicioPage implements OnInit {
         this.storage.set('ciudadesFavoritas', ciudades).then(() => {
           this.ngZone.run(() => {
             this.changeDetectorRef.detectChanges();
-            this.eventService.triggerCiudadGuardada();
+            this.favoritosService.actualizarCiudadesFavoritas();
           });
         });
       }
