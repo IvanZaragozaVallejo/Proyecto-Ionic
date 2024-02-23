@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
 import { ThemeService } from '../theme.service';
@@ -8,6 +8,7 @@ import { TranslateService } from '../services/translate.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { PreferencesService } from '../preferences.service';
 import { Storage } from '@ionic/storage-angular';
+import { EventService } from '../event.service';
 
 interface CiudadFavorita {
   nombre: string;
@@ -45,7 +46,12 @@ export class InicioPage implements OnInit {
     private translateService: TranslateService,
     private preferenceService: PreferencesService,
     private navCtrl: NavController,
-    private storage: Storage
+    private storage: Storage,
+    private changeDetectorRef: ChangeDetectorRef,
+    private ngZone: NgZone,
+    private eventService: EventService
+
+    
   ) { this.storage.create();
     this.storage.get('ciudadesFavoritas').then((ciudadesGuardadas: CiudadFavorita[] | null) => {
       this.ciudadesFavoritas = ciudadesGuardadas || [];
@@ -136,22 +142,22 @@ export class InicioPage implements OnInit {
 
   guardarCiudad() {
     const nuevaCiudad: CiudadFavorita = { nombre: this.city };
-    
+  
     this.storage.get('ciudadesFavoritas').then((ciudadesGuardadas: CiudadFavorita[] | null) => {
-      if (ciudadesGuardadas) {
-        const ciudadExistente = ciudadesGuardadas.find(ciudad => ciudad.nombre === this.city);
+      const ciudades = ciudadesGuardadas || [];
   
-        if (!ciudadExistente) {
-          ciudadesGuardadas.push(nuevaCiudad);
-  
-          this.storage.set('ciudadesFavoritas', ciudadesGuardadas);
-        }
-      } else {
-        this.storage.set('ciudadesFavoritas', [nuevaCiudad]);
+      if (!ciudades.some(ciudad => ciudad.nombre === this.city)) {
+        ciudades.push(nuevaCiudad);
+        this.storage.set('ciudadesFavoritas', ciudades).then(() => {
+          this.ngZone.run(() => {
+            this.changeDetectorRef.detectChanges();
+            this.eventService.triggerCiudadGuardada();
+          });
+        });
       }
     });
   }
-
+  
   ionViewWillEnter() {
     this.preferenceService.loadPreferences();
     this.applyPreferences();
