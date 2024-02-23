@@ -57,7 +57,8 @@ export class InicioPage implements OnInit {
   ) { this.storage.create();
     this.storage.get('ciudadesFavoritas').then((ciudadesGuardadas: CiudadFavorita[] | null) => {
       this.ciudadesFavoritas = ciudadesGuardadas || [];
-    }); }
+    }); 
+  }
 
   ngOnInit() {
     this.printCurrentPosition(null);
@@ -121,7 +122,6 @@ export class InicioPage implements OnInit {
         this.condition = response.responseData.translatedText;
       });
 
-      this.guardarCiudad();
     });
   }
 

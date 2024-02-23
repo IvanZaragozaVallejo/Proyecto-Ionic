@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.storage.create();
 
+    // recupera las ciudades favoritas almacenadas al iniciar la aplicaion
     this.storage.get('ciudadesFavoritas').then((ciudades: CiudadFavorita[] | null) => {
       this.ciudadesFavoritas = ciudades || [];
     });
@@ -45,11 +46,22 @@ export class AppComponent implements OnInit {
       const nuevaCiudad: CiudadFavorita = { nombre: this.city };
       this.ciudadesFavoritas.push(nuevaCiudad);
 
+      // guardar las ciudades favoritas en ionic storage
       this.storage.set('ciudadesFavoritas', this.ciudadesFavoritas);
     }
   }
 
   navegarAInicio(ciudad: string) {
     this.navCtrl.navigateForward(`/inicio/${ciudad}`);
+  }
+
+  borrarCiudad(ciudad: CiudadFavorita) {
+    const index = this.ciudadesFavoritas.indexOf(ciudad);
+    if (index !== -1) {
+      this.ciudadesFavoritas.splice(index, 1);
+  
+      // guardar la lista actualizada en Ionic Storage
+      this.storage.set('ciudadesFavoritas', this.ciudadesFavoritas);
+    }
   }
 }
