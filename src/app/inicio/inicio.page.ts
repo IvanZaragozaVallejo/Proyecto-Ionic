@@ -46,7 +46,10 @@ export class InicioPage implements OnInit {
     private preferenceService: PreferencesService,
     private navCtrl: NavController,
     private storage: Storage
-  ) { }
+  ) { this.storage.create();
+    this.storage.get('ciudadesFavoritas').then((ciudadesGuardadas: CiudadFavorita[] | null) => {
+      this.ciudadesFavoritas = ciudadesGuardadas || [];
+    }); }
 
   ngOnInit() {
     this.printCurrentPosition(null);
@@ -133,8 +136,20 @@ export class InicioPage implements OnInit {
 
   guardarCiudad() {
     const nuevaCiudad: CiudadFavorita = { nombre: this.city };
-    this.ciudadesFavoritas.push(nuevaCiudad);
-    this.storage.set('ciudadesFavoritas', this.ciudadesFavoritas);
+    
+    this.storage.get('ciudadesFavoritas').then((ciudadesGuardadas: CiudadFavorita[] | null) => {
+      if (ciudadesGuardadas) {
+        const ciudadExistente = ciudadesGuardadas.find(ciudad => ciudad.nombre === this.city);
+  
+        if (!ciudadExistente) {
+          ciudadesGuardadas.push(nuevaCiudad);
+  
+          this.storage.set('ciudadesFavoritas', ciudadesGuardadas);
+        }
+      } else {
+        this.storage.set('ciudadesFavoritas', [nuevaCiudad]);
+      }
+    });
   }
 
   ionViewWillEnter() {
