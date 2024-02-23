@@ -20,7 +20,7 @@
 
 <ion-content class="contenido" color="principal">
   <ion-row class="buscador">
-    <ion-searchbar placeholder="Buscar..." (ionChange)="onSearch($event)"></ion-searchbar>
+    <ion-searchbar [debounce]="1000" (ionInput)="handleSearchInput($event)" animated="true" placeholder="Location"></ion-searchbar>
   </ion-row>
   <ion-row class="contenedorImagen">
     <div class="imagenPrincipal">
