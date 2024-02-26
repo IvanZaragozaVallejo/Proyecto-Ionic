@@ -143,18 +143,28 @@ export class InicioPage implements OnInit {
     console.log('Búsqueda:', searchTerm);
   }
 
+  // Método para guardar una ciudad en la lista de ciudades favoritas
   guardarCiudad() {
+    // Crear un objeto CiudadFavorita con el nombre proporcionado
     const nuevaCiudad: CiudadFavorita = { nombre: this.city };
   
+    // Obtener la lista actual de ciudades favoritas almacenadas en el almacenamiento
     this.storage.get('ciudadesFavoritas').then((ciudadesGuardadas: CiudadFavorita[] | null) => {
+      // Si no hay ciudades guardadas, inicializa la lista como un array vacío
       const ciudades = ciudadesGuardadas || [];
-  
+    
+      // Verificar si la ciudad actual ya está en la lista de ciudades favoritas      
       if (!ciudades.some(ciudad => ciudad.nombre === this.city)) {
+        // Si la ciudad no está en la lista, agrégala
         ciudades.push(nuevaCiudad);
+         
+        // Guardar la lista actualizada de ciudades favoritas en el almacenamiento
         this.storage.set('ciudadesFavoritas', ciudades).then(() => {
+        
+          // Forzar la actualización de la vista en la zona Angular y realizar otras operaciones después de guardar
           this.ngZone.run(() => {
-            this.changeDetectorRef.detectChanges();
-            this.favoritosService.actualizarCiudadesFavoritas();
+            this.changeDetectorRef.detectChanges(); // Forzar la detección de cambios en Angular
+            this.favoritosService.actualizarCiudadesFavoritas(); // Actualizar ciudades favoritas en algún servicio
           });
         });
       }

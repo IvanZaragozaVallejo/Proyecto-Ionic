@@ -13,8 +13,8 @@ interface CiudadFavorita {
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  ciudadesFavoritas: CiudadFavorita[] = [];
-  city: string = '';
+  ciudadesFavoritas: CiudadFavorita[] = []; // Arreglo para almacenar las ciudades favoritas
+  city: string = ''; // Variable para la nueva ciudad que se va a agregar
 
   constructor(
     private themeService: ThemeService,
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.storage.create();
+    await this.storage.create(); // Inicializa el almacenamiento de Ionic
 
     // recupera las ciudades favoritas almacenadas al iniciar la aplicaion
     this.storage.get('ciudadesFavoritas').then((ciudades: CiudadFavorita[] | null) => {
@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
   }
 
   guardarCiudad() {
+    // Verifica que la ciudad tenga un valor y no esté duplicada en la lista
     if (this.city && !this.ciudadesFavoritas.some(ciudad => ciudad.nombre === this.city)) {
       const nuevaCiudad: CiudadFavorita = { nombre: this.city };
       this.ciudadesFavoritas.push(nuevaCiudad);
@@ -52,12 +53,14 @@ export class AppComponent implements OnInit {
   }
 
   navegarAInicio(ciudad: string) {
+    // Navega a la página de inicio con el nombre de la ciudad como parámetro
     this.navCtrl.navigateForward(`/inicio/${ciudad}`);
   }
 
   borrarCiudad(ciudad: CiudadFavorita) {
     const index = this.ciudadesFavoritas.indexOf(ciudad);
     if (index !== -1) {
+      // Elimina la ciudad de la lista
       this.ciudadesFavoritas.splice(index, 1);
   
       // guardar la lista actualizada en Ionic Storage
