@@ -167,11 +167,13 @@ export class InicioPage implements OnInit {
   }
 
   applyPreferences() {
-    this.tempUnits = this.preferenceService.preferences.unidadTemperatura;
-    this.windUnits = this.preferenceService.preferences.viento;
-    this.precipUnits = this.preferenceService.preferences.precipitacion;
+    const preferences = this.preferenceService.getPreferences();
     
-    // Llamar directamente a printCurrentPosition para actualizar la pantalla
+    this.tempUnits = preferences.unidadTemperatura;
+    this.windUnits = preferences.viento;
+    this.precipUnits = preferences.precipitacion;
+    
+    // Actualizar la pantalla con los nuevos valores de configuración
     this.printCurrentPosition(null);
   }
-}
+}  

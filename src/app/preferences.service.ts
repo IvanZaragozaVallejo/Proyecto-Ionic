@@ -1,28 +1,30 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PreferencesService {
 
-  preferences = {
+  private preferences = {
     unidadTemperatura: 'celsius',
     viento: 'kmh',
     precipitacion: 'mm'
   };
 
-  constructor() { }
+  constructor(private storage: Storage) { }
 
-  savePreferences(preferences: any) {
+  async savePreferences(preferences: any) {
     this.preferences = preferences;
-    localStorage.setItem('preferences', JSON.stringify(this.preferences));
+    await this.storage.set('preferences', this.preferences);
   }
 
-  loadPreferences() {
-    const storedPreferences = localStorage.getItem('preferences');
-    if (storedPreferences) {
-      this.preferences = JSON.parse(storedPreferences);
-    }
+  async loadPreferences() {
+    const storedPreferences = await this.storage.get('preferences');
+    this.preferences = storedPreferences || this.preferences;
   }
 
+  getPreferences() {
+    return { ...this.preferences };
+  }
 }
