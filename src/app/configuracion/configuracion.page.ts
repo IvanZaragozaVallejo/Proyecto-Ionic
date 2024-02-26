@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PreferencesService } from '../preferences.service';
+import { EventService } from '../event.service';
+import { Storage } from '@ionic/storage-angular'; 
 
 @Component({
   selector: 'app-configuracion',
@@ -15,7 +17,9 @@ export class ConfiguracionPage implements OnInit {
 
   constructor(
     private preferencesService: PreferencesService,
-    private router: Router
+    private eventService: EventService, 
+    private router: Router,
+    private storage: Storage 
   ) {}
 
   ngOnInit() {
@@ -28,17 +32,27 @@ export class ConfiguracionPage implements OnInit {
       viento: this.seleccionViento,
       precipitacion: this.seleccionPrecipitacion
     };
-
+  
     this.preferencesService.savePreferences(preferences);
-
-    // Después de guardar las preferencias, navega de vuelta a la página de inicio
-    this.router.navigate(['/inicio']);
+  
+    // Guardar las preferencias actualizadas en Ionic Storage
+    this.storage.set('preferences', preferences).then(() => {
+      // Después de guardar las preferencias, notificar el cambio utilizando el servicio de eventos
+      this.eventService.triggerConfigChanged();
+  
+      // Navegar de vuelta a la página de inicio
+      this.router.navigate(['/inicio']);
+    });
   }
 
   loadPreferences() {
-    this.preferencesService.loadPreferences();
-    this.seleccionTemperatura = this.preferencesService.preferences.unidadTemperatura;
-    this.seleccionViento = this.preferencesService.preferences.viento;
-    this.seleccionPrecipitacion = this.preferencesService.preferences.precipitacion;
+    // Cargar preferencias desde Ionic Storage al inicio
+    this.storage.get('preferences').then((storedPreferences) => {
+      if (storedPreferences) {
+        this.seleccionTemperatura = storedPreferences.unidadTemperatura;
+        this.seleccionViento = storedPreferences.viento;
+        this.seleccionPrecipitacion = storedPreferences.precipitacion;
+      }
+    });
   }
 }

@@ -54,10 +54,11 @@ export class InicioPage implements OnInit {
     private favoritosService: FavoritosService
 
     
-  ) { this.storage.create();
-    this.storage.get('ciudadesFavoritas').then((ciudadesGuardadas: CiudadFavorita[] | null) => {
-      this.ciudadesFavoritas = ciudadesGuardadas || [];
-    }); 
+  ) {
+    this.eventService.configChanged$.subscribe(() => {
+      // Actualizar la pantalla aquí con los nuevos valores de configuración
+      this.applyPreferences();
+    });
   }
 
   ngOnInit() {
@@ -169,6 +170,8 @@ export class InicioPage implements OnInit {
     this.tempUnits = this.preferenceService.preferences.unidadTemperatura;
     this.windUnits = this.preferenceService.preferences.viento;
     this.precipUnits = this.preferenceService.preferences.precipitacion;
+    
+    // Llamar directamente a printCurrentPosition para actualizar la pantalla
+    this.printCurrentPosition(null);
   }
-
 }

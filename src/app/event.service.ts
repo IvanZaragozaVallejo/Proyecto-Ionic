@@ -1,3 +1,4 @@
+// event.service.ts
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -5,11 +6,11 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class EventService {
-  private ciudadGuardadaSubject = new Subject<void>();
+  private configChangedSource = new Subject<void>();
 
-  ciudadGuardada$ = this.ciudadGuardadaSubject.asObservable();
+  configChanged$ = this.configChangedSource.asObservable();
 
-  triggerCiudadGuardada() {
-    this.ciudadGuardadaSubject.next();
+  triggerConfigChanged() {
+    this.configChangedSource.next();
   }
 }
